@@ -121,6 +121,8 @@ char  *convert_to_dest_base(cb_obj cb_object)
   char  *dest_base;
   int   str_len;
   int neg;
+  char *original_nbr;
+  original_nbr = cb_object.nbr;
   neg = 0;
   if(*cb_object.nbr == '+' || *cb_object.nbr == '-')
   {
@@ -141,6 +143,7 @@ char  *convert_to_dest_base(cb_obj cb_object)
     dest_base[str_len - 1 - i] = buffer;
     i++;
 }
+  cb_object.nbr = original_nbr;
   return (dest_base);
 }
 
