@@ -101,13 +101,14 @@ char  *to_dest_base(int base_ten, cb_obj cb_object, int neg)
     return NULL;
   div = base_ten;
   i = 0;
+  //TODO: edge case base_ten is 0
   while (div > 0)
   {
     res[i] = cb_object.base_to[div % cb_object.base_to_len];
     div /= cb_object.base_to_len;
     i++;
   }
-  if (neg)
+  if (neg && base_ten != 0)
     res[i++] = '-';
   res[i] = '\0';
   return (res);
@@ -132,17 +133,24 @@ char  *convert_to_dest_base(cb_obj cb_object)
   }
   base_ten = to_base_ten(cb_object);
   if (base_ten == -1)
+  {
+    cb_object.nbr = original_nbr;
     return NULL;
+  }
   dest_base = to_dest_base(base_ten, cb_object, neg);
+  if (dest_base == NULL) 
+  {
+    return NULL;
+  }
   str_len = get_str_length(dest_base);
   i = 0;
   while (i < str_len / 2)
-{
+  {
     buffer = dest_base[i];
     dest_base[i] = dest_base[str_len - 1 - i];
     dest_base[str_len - 1 - i] = buffer;
     i++;
-}
+  }
   cb_object.nbr = original_nbr;
   return (dest_base);
 }
@@ -173,6 +181,8 @@ int main(void)
   if(converted_number == NULL)
     printf("Invalid Input");
   else
-    printf("%s in base: %s\nConverted to base: %s\nIs: %s\n", nbr, base_from, base_to, converted_number);
-  free(converted_number);
+  {
+    //printf("%s in base: %s\nConverted to base: %s\nIs: %s\n", nbr, base_from, base_to, converted_number);
+    free(converted_number);
+  }
 }
