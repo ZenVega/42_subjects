@@ -14,6 +14,7 @@ typedef enum
 
 #define EVEN_MSG "I have an even number of arguments.\n"
 #define ODD_MSG "I have an odd number of arguments.\n"
-#define SUCCESS 1
+// by convention, main returns 0 on a successful execution
+#define SUCCESS 0
 
 #endif
