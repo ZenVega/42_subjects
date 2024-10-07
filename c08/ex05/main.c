@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "ft_stock_str.h"
+#include "../ex04/ft_stock_str.h"
 
 int main(void)
 {
