@@ -1,5 +1,8 @@
-#include "ft_stock_str.h"
 #include <stdlib.h>
+#include <unistd.h>
+#include "ft_stock_str.h"
+
+#include <stdio.h>
 
 int ft_str_len(char *str)
 {
@@ -42,7 +45,6 @@ void clean_all(t_stock_str *struct_arr, int iterations)
 struct s_stock_str *ft_strs_to_tab(int ac, char **av)
 {
   t_stock_str *struct_arr;
-  t_stock_str temp_struct;
   int i;
   i = 0;
   struct_arr = (t_stock_str *)malloc(sizeof(t_stock_str) * (ac + 1));
@@ -52,15 +54,14 @@ struct s_stock_str *ft_strs_to_tab(int ac, char **av)
   {
     int length;
     length = ft_str_len(av[i]);
-    temp_struct.size = length;
-    temp_struct.str = av[i];
-    temp_struct.copy = ft_str_copy(av[i]);
-    if (!temp_struct.copy)
+    struct_arr[i].size = length;
+    struct_arr[i].str = av[i];
+    struct_arr[i].copy = ft_str_copy(av[i]);
+    if (!struct_arr[i].copy)
     {
       clean_all(struct_arr, i);
       return NULL;
     }
-    struct_arr[i] = temp_struct;
     i++;
   }
   struct_arr[i].str = 0;

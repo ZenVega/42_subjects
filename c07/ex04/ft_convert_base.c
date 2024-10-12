@@ -2,13 +2,13 @@
 #include <stdlib.h>
 
 struct convert_base
-  {
-    char *nbr;
-    char *base_from;
-    char *base_to;
-    int base_from_len;
-    int base_to_len;
-  } typedef cb_obj;
+{
+  char *nbr;
+  char *base_from;
+  char *base_to;
+  int base_from_len;
+  int base_to_len;
+} typedef cb_obj;
 
 int validate_base(char *base)
 {
@@ -18,11 +18,11 @@ int validate_base(char *base)
   while (base[i])
   {
     j = 0;
-    if(base[i] <= '!' || base[i] >= '~' || base[i] == '-' || base[i] == '+')
+    if (base[i] <= '!' || base[i] >= '~' || base[i] == '-' || base[i] == '+')
       return (0);
     while (j < i)
     {
-      if(base[i] == base[j])
+      if (base[i] == base[j])
         return (0);
       j++;
     }
@@ -31,7 +31,7 @@ int validate_base(char *base)
   return (1);
 }
 
-int get_str_length(char* str)
+int get_str_length(char *str)
 {
   int i;
   i = 0;
@@ -42,18 +42,18 @@ int get_str_length(char* str)
 
 int get_base(char *base)
 {
-  if(!validate_base(base))
+  if (!validate_base(base))
     return (-1);
   int i;
   i = 0;
-  while(base[i])
+  while (base[i])
     i++;
-  if (i >= 2 )
+  if (i >= 2)
     return (i);
   return 0;
 }
 
-int base_val_to_int(char value, char* base)
+int base_val_to_int(char value, char *base)
 {
   int i;
   i = 0;
@@ -73,22 +73,22 @@ int to_base_ten(cb_obj cb_object)
   int val_in_base;
   res = 0;
   while (cb_object.nbr[i])
-    {
-      val_in_base = base_val_to_int(cb_object.nbr[i], cb_object.base_from);
-      if (val_in_base == -1)
-        return (-1);
-      res = res * cb_object.base_from_len + val_in_base;
-      i++;
-    }
+  {
+    val_in_base = base_val_to_int(cb_object.nbr[i], cb_object.base_from);
+    if (val_in_base == -1)
+      return (-1);
+    res = res * cb_object.base_from_len + val_in_base;
+    i++;
+  }
   return (res);
 }
 
-char  *to_dest_base(int base_ten, cb_obj cb_object, int neg)
+char *to_dest_base(int base_ten, cb_obj cb_object, int neg)
 {
   int i;
   int div;
   int res_length;
-  char  *res;
+  char *res;
   div = base_ten;
   res_length = 0;
   while (div > 0)
@@ -97,11 +97,11 @@ char  *to_dest_base(int base_ten, cb_obj cb_object, int neg)
     res_length++;
   }
   res = (char *)malloc(sizeof(char) * (res_length + 1 + neg));
-  if(!res)
+  if (!res)
     return NULL;
   div = base_ten;
   i = 0;
-  //TODO: edge case base_ten is 0
+  // TODO: edge case base_ten is 0
   while (div > 0)
   {
     res[i] = cb_object.base_to[div % cb_object.base_to_len];
@@ -114,20 +114,20 @@ char  *to_dest_base(int base_ten, cb_obj cb_object, int neg)
   return (res);
 }
 
-char  *convert_to_dest_base(cb_obj cb_object)
+char *convert_to_dest_base(cb_obj cb_object)
 {
-  int   base_ten;
-  int   i;
-  char  buffer;
-  char  *dest_base;
-  int   str_len;
+  int base_ten;
+  int i;
+  char buffer;
+  char *dest_base;
+  int str_len;
   int neg;
   char *original_nbr;
   original_nbr = cb_object.nbr;
   neg = 0;
-  if(*cb_object.nbr == '+' || *cb_object.nbr == '-')
+  if (*cb_object.nbr == '+' || *cb_object.nbr == '-')
   {
-    if(*cb_object.nbr == '-')
+    if (*cb_object.nbr == '-')
       neg = 1;
     cb_object.nbr++;
   }
@@ -138,7 +138,7 @@ char  *convert_to_dest_base(cb_obj cb_object)
     return NULL;
   }
   dest_base = to_dest_base(base_ten, cb_object, neg);
-  if (dest_base == NULL) 
+  if (dest_base == NULL)
   {
     return NULL;
   }
@@ -155,16 +155,16 @@ char  *convert_to_dest_base(cb_obj cb_object)
   return (dest_base);
 }
 
-char  *ft_convert_base(char *nbr, char *base_from, char *base_to)
+char *ft_convert_base(char *nbr, char *base_from, char *base_to)
 {
-  char  *res;
+  char *res;
   cb_obj cb_object;
   cb_object.nbr = nbr;
   cb_object.base_from = base_from;
   cb_object.base_to = base_to;
   cb_object.base_from_len = get_base(base_from);
   cb_object.base_to_len = get_base(base_to);
-  if(cb_object.base_from_len == -1 || cb_object.base_to_len == -1)
+  if (cb_object.base_from_len == -1 || cb_object.base_to_len == -1)
     return NULL;
   res = convert_to_dest_base(cb_object);
   if (res == NULL)
@@ -174,15 +174,14 @@ char  *ft_convert_base(char *nbr, char *base_from, char *base_to)
 
 int main(void)
 {
-  char  *nbr = "-FFF42D";
-  char  *base_from = "0123456789ABCDEF";
-  char  *base_to = "012";
-  char  *converted_number = ft_convert_base(nbr, base_from, base_to);
-  if(converted_number == NULL)
+  char *nbr = "-FFF42D";
+  char *base_from = "0123456789ABCDEF";
+  char *base_to = "012";
+  char *converted_number = ft_convert_base(nbr, base_from, base_to);
+  if (converted_number == NULL)
     printf("Invalid Input");
   else
   {
-    //printf("%s in base: %s\nConverted to base: %s\nIs: %s\n", nbr, base_from, base_to, converted_number);
     free(converted_number);
   }
 }
